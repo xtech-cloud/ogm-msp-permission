@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package group;
+option go_package = "proto/permission;permission";
+
+// 状态
+message Status
+{
+    int32 code = 1;     // 状态码
+    string message = 2; // 状态信息
+}
+
+// 空白请求
+message BlankRequest
+{
+}
+
+// 空白回复
+message BlankResponse
+{
+    Status status = 1; // 状态
+}
+
+// 带UUID的回复
+message UuidResponse
+{
+    Status status = 1; // 状态
+    string uuid = 2;   // uuid
+}
+
+// 作用域实体
+message ScopeEntity
+{
+    string uuid = 1; // uuid
+    string key = 2;  // 键
+    string name = 3; // 名称
+}
+
+// 规则实体
+message RuleEntity
+{
+    string uuid = 1;  // uuid
+    string scope = 2; // 作用域的uuid
+    string key = 3;   // 键
+    string name = 4;  // 名称
+}

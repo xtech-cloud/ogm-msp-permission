@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+import "proto/permission/shared.proto";
+
+package group;
+option go_package = "proto/permission;permission";
+
+// 规则
+service Rule
+{
+    // 添加
+    rpc Add(RuleAddRequest) returns (UuidResponse) { }
+    // 更新
+    rpc Update(RuleUpdateRequest) returns (UuidResponse) { }
+    // 删除
+    rpc Delete(RuleDeleteRequest) returns (UuidResponse) { }
+    // 获取
+    rpc Get(RuleGetRequest) returns (RuleGetResponse) { }
+    // 列举
+    rpc List(RuleListRequest) returns (RuleListResponse) { }
+    // 搜索
+    rpc Search(RuleSearchRequest) returns (RuleListResponse) { }
+}
+
+// 创建的请求
+message RuleAddRequest
+{
+    string key = 1;   // 键
+    string name = 2;  // 名称
+    string scope = 3; // 作用域的uuid
+}
+
+// 更新的请求
+message RuleUpdateRequest
+{
+    string uuid = 1; // uuid
+    string key = 2;  // 键
+    string name = 3; // 名称
+}
+
+// 删除的请求
+message RuleDeleteRequest
+{
+    string uuid = 1; // uuid
+}
+
+// 列举的请求
+message RuleListRequest
+{
+    int64 offset = 1; // 偏移值
+    int64 count = 2;  // 数量
+}
+
+// 搜索的请求
+message RuleSearchRequest
+{
+    int64 offset = 1; // 偏移值
+    int64 count = 2;  // 数量
+    string scope = 3; // 作用域的uuid
+    string key = 10;  // 键
+    string name = 11; // 名称
+}
+
+// 列举的回复
+message RuleListResponse
+{
+    Status status = 1;              // 状态
+    uint64 total = 2;               // 总数
+    repeated RuleEntity entity = 3; // 实体列表
+}
+
+// 获取的请求
+message RuleGetRequest
+{
+    string uuid = 1; // uuid
+}
+
+// 获取集合信息的回复
+message RuleGetResponse
+{
+    Status status = 1;     // 状态
+    RuleEntity entity = 2; // 实体
+}
