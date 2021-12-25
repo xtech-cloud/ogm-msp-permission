@@ -28,6 +28,7 @@ message RuleAddRequest
     string key = 1;   // 键
     string name = 2;  // 名称
     string scope = 3; // 作用域的uuid
+    int32 state = 4;  // 状态
 }
 
 // 更新的请求
@@ -36,6 +37,7 @@ message RuleUpdateRequest
     string uuid = 1; // uuid
     string key = 2;  // 键
     string name = 3; // 名称
+    int32 state = 4; // 状态
 }
 
 // 删除的请求
@@ -59,6 +61,7 @@ message RuleSearchRequest
     string scope = 3; // 作用域的uuid
     string key = 10;  // 键
     string name = 11; // 名称
+    int32 state = 12; // 状态
 }
 
 // 列举的回复
