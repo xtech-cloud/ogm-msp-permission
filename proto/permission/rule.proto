@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "proto/permission/shared.proto";
 
-package group;
+package permission;
 option go_package = "proto/permission;permission";
 
 // 规则
