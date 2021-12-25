@@ -43,4 +43,5 @@ message RuleEntity
     string scope = 2; // 作用域的uuid
     string key = 3;   // 键
     string name = 4;  // 名称
+    int32 state = 5;  // 状态
 }
