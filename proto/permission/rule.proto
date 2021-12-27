@@ -20,6 +20,10 @@ service Rule
     rpc List(RuleListRequest) returns (RuleListResponse) { }
     // 搜索
     rpc Search(RuleSearchRequest) returns (RuleListResponse) { }
+    // 导出
+    rpc Export(RuleExportRequest) returns (RuleExportResponse) { }
+    // 导入
+    rpc Import(RuleImportRequest) returns (RuleImportResponse) { }
 }
 
 // 创建的请求
@@ -84,4 +88,31 @@ message RuleGetResponse
 {
     Status status = 1;     // 状态
     RuleEntity entity = 2; // 实体
+}
+
+// 导出的请求
+message RuleExportRequest
+{
+    string scope = 1; // scope的uuid
+}
+
+// 导出的回复
+message RuleExportResponse
+{
+    Status status = 1; // 状态
+    string dump = 2;   // 导出的内容
+}
+
+// 导入的请求
+message RuleImportRequest
+{
+    string scope = 1; // scope的uuid
+    string dump = 2;  // 导入的内容
+}
+
+// 导入的回复
+message RuleImportResponse
+{
+    Status status = 1;           // 状态
+    repeated string failure = 2; // 失败的条目
 }

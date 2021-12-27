@@ -48,6 +48,10 @@ type RuleService interface {
 	List(ctx context.Context, in *RuleListRequest, opts ...client.CallOption) (*RuleListResponse, error)
 	// 搜索
 	Search(ctx context.Context, in *RuleSearchRequest, opts ...client.CallOption) (*RuleListResponse, error)
+	// 导出
+	Export(ctx context.Context, in *RuleExportRequest, opts ...client.CallOption) (*RuleExportResponse, error)
+	// 导入
+	Import(ctx context.Context, in *RuleImportRequest, opts ...client.CallOption) (*RuleImportResponse, error)
 }
 
 type ruleService struct {
@@ -122,6 +126,26 @@ func (c *ruleService) Search(ctx context.Context, in *RuleSearchRequest, opts ..
 	return out, nil
 }
 
+func (c *ruleService) Export(ctx context.Context, in *RuleExportRequest, opts ...client.CallOption) (*RuleExportResponse, error) {
+	req := c.c.NewRequest(c.name, "Rule.Export", in)
+	out := new(RuleExportResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ruleService) Import(ctx context.Context, in *RuleImportRequest, opts ...client.CallOption) (*RuleImportResponse, error) {
+	req := c.c.NewRequest(c.name, "Rule.Import", in)
+	out := new(RuleImportResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Rule service
 
 type RuleHandler interface {
@@ -137,6 +161,10 @@ type RuleHandler interface {
 	List(context.Context, *RuleListRequest, *RuleListResponse) error
 	// 搜索
 	Search(context.Context, *RuleSearchRequest, *RuleListResponse) error
+	// 导出
+	Export(context.Context, *RuleExportRequest, *RuleExportResponse) error
+	// 导入
+	Import(context.Context, *RuleImportRequest, *RuleImportResponse) error
 }
 
 func RegisterRuleHandler(s server.Server, hdlr RuleHandler, opts ...server.HandlerOption) error {
@@ -147,6 +175,8 @@ func RegisterRuleHandler(s server.Server, hdlr RuleHandler, opts ...server.Handl
 		Get(ctx context.Context, in *RuleGetRequest, out *RuleGetResponse) error
 		List(ctx context.Context, in *RuleListRequest, out *RuleListResponse) error
 		Search(ctx context.Context, in *RuleSearchRequest, out *RuleListResponse) error
+		Export(ctx context.Context, in *RuleExportRequest, out *RuleExportResponse) error
+		Import(ctx context.Context, in *RuleImportRequest, out *RuleImportResponse) error
 	}
 	type Rule struct {
 		rule
@@ -181,4 +211,12 @@ func (h *ruleHandler) List(ctx context.Context, in *RuleListRequest, out *RuleLi
 
 func (h *ruleHandler) Search(ctx context.Context, in *RuleSearchRequest, out *RuleListResponse) error {
 	return h.RuleHandler.Search(ctx, in, out)
+}
+
+func (h *ruleHandler) Export(ctx context.Context, in *RuleExportRequest, out *RuleExportResponse) error {
+	return h.RuleHandler.Export(ctx, in, out)
+}
+
+func (h *ruleHandler) Import(ctx context.Context, in *RuleImportRequest, out *RuleImportResponse) error {
+	return h.RuleHandler.Import(ctx, in, out)
 }
